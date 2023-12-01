@@ -18,16 +18,16 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class ExchangeKakaoAccessTokenImpl implements ExchangeKakaoAccessToken {
-    @Value("${KAKAO_REST_API_KEY}")
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String restApiKey;
 
-    @Value("${KAKAO_CLIENT_SECRET}")
+    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
     private String clientSecret;
 
-    @Value("${KAKAO_LOGIN_REDIRECT_URL}")
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirectURI;
 
-    @Value("${KAKAO_LOGIN_ENDPOINT}")
+    @Value("${spring.security.oauth2.client.provider.kakao.token_uri}")
     private String endPoint;
 
     @Override

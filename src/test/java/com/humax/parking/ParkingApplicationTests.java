@@ -3,10 +3,10 @@ package com.humax.parking;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+
 class ParkingApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 

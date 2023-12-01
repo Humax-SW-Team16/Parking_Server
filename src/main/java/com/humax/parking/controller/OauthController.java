@@ -19,8 +19,8 @@ public class OauthController {
 
     private final KakaoLoginService kakaoLoginService;
 
-    @Value("${KAKAO_LOGIN_URL}")
-    private String kakaoLoginUri;
+    //@Value("${KAKAO_LOGIN_URL}")
+    //private String kakaoLoginUri;
 
 //    @Value("${MAIN_PAGE_URL}")
 //    private String mainPageUrl;
@@ -31,7 +31,7 @@ public class OauthController {
     //클라이언트가 해당 엔드포인트에 접근하면, kakaoLoginUri로 리디렉션하여 사용자를 카카오 로그인 페이지로 보냅니다.
     @GetMapping("/kakao/login")
     public void redirectToKakaoLogin(HttpServletResponse response) throws IOException {
-        response.sendRedirect(kakaoLoginUri);
+        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=3ccff0e2c4b3aa00338b74edd8470a53&redirect_uri=http://localhost:8080/oauth/kakao/login&response_type=code");
     }
 
     //카카오 소셜 로그인 구현
