@@ -7,6 +7,7 @@ import com.humax.parking.repository.UserRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,6 +36,10 @@ public class UserService {
                     userLatitude, userLongitude, maxDistance);
 
             List<ParkingInfoDTO> parkingInfoDTOs = new ArrayList<>();
+            if(!nearParkingEntities.isEmpty())
+                //검색 결과 있을 때만 갱신
+                updateSearchCount(nearParkingEntities);
+
             for (ParkingEntity parkingEntity : nearParkingEntities) {
                 ParkingInfoDTO parkingInfoDTO = new ParkingInfoDTO();
 
@@ -56,9 +61,6 @@ public class UserService {
                 parkingInfoDTO.setApplyWeekend(parkingEntity.getApplyWeekend());
                 parkingInfoDTOs.add(parkingInfoDTO);
             }
-
-            // 검색 횟수 갱신
-            updateSearchCount(nearParkingEntities);
 
             return parkingInfoDTOs;
         } catch (Exception e){
@@ -108,7 +110,7 @@ public class UserService {
     }
 
 
-    private void updateSearchCount(List<ParkingEntity> parkingEntities) {
+    public void updateSearchCount(List<ParkingEntity> parkingEntities) {
         for (ParkingEntity parkingEntity : parkingEntities) {
             String key = SEARCH_COUNT_KEY_PREFIX + parkingEntity.getParkingId();
             stringRedisTemplate.opsForValue().increment(key);
@@ -117,7 +119,11 @@ public class UserService {
         }
     }
 
-
+    /*public void updateSearchCountForAllParkings() {
+        List<ParkingEntity> allParkings = parkingRepository.findAll();
+        updateSearchCount(allParkings);
+        System.out.println("search_count 갱신 완료");
+    }*/
 
     // // ParkingEntity를 ParkingInfoDTO로 변환 (stream 적용 안됨)
     private ParkingInfoDTO convertToParkingInfoDTO(ParkingEntity parkingEntity) {
