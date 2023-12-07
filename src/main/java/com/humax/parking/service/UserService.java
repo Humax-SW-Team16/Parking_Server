@@ -6,6 +6,7 @@ import com.humax.parking.repository.ParkingRepository;
 import com.humax.parking.repository.UserRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +20,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ParkingRepository parkingRepository;
+
+    private final StringRedisTemplate stringRedisTemplate;
+
+    private static final String SEARCH_COUNT_KEY_PREFIX = "search_count:";
 
     public List<ParkingInfoDTO> findNearbyParking(UserLocationDTO userLocationDTO){
         try{
@@ -103,11 +108,13 @@ public class UserService {
     }
 
 
-    private void updateSearchCount(List<ParkingEntity> parkingEntities){
-        for(ParkingEntity parkingEntity : parkingEntities){
-            parkingEntity.setSearchCount(parkingEntity.getSearchCount()+1);
+    private void updateSearchCount(List<ParkingEntity> parkingEntities) {
+        for (ParkingEntity parkingEntity : parkingEntities) {
+            parkingEntity.setSearchCount(parkingEntity.getSearchCount() + 1);
         }
     }
+
+
 
     // // ParkingEntity를 ParkingInfoDTO로 변환 (stream 적용 안됨)
     private ParkingInfoDTO convertToParkingInfoDTO(ParkingEntity parkingEntity) {
