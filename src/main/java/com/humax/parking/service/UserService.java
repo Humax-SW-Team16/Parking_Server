@@ -110,7 +110,10 @@ public class UserService {
 
     private void updateSearchCount(List<ParkingEntity> parkingEntities) {
         for (ParkingEntity parkingEntity : parkingEntities) {
-            parkingEntity.setSearchCount(parkingEntity.getSearchCount() + 1);
+            String key = SEARCH_COUNT_KEY_PREFIX + parkingEntity.getParkingId();
+            stringRedisTemplate.opsForValue().increment(key);
+            // 로그 추가
+            System.out.println("추가된 주차장 parking_id: " + parkingEntity.getParkingId());
         }
     }
 
