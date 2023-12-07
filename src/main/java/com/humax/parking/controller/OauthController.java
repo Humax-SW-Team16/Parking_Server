@@ -43,7 +43,7 @@ public class OauthController {
         boolean isNewUser = loginResult.isNewUser();
 
         Cookie authorization = new Cookie("Authorization", loginResult.getToken());
-        authorization.setSecure(true); // HTTPS 연결에서만 쿠키 전송
+        authorization.setSecure(false); // HTTPS 연결에서만 쿠키 전송
         authorization.setHttpOnly(true); // JavaScript에서 접근 불가
         authorization.setPath("/"); // 전체 경로에 대해 쿠키 적용
         authorization.setMaxAge(3600); // 1시간 동안 유효
