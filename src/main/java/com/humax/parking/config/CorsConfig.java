@@ -1,5 +1,6 @@
 package com.humax.parking.config;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,8 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("https://alzzaipo.com", "http://localhost:3000"));
+        //config.setAllowedOrigins(List.of("https://alzzaipo.com", "http://localhost:3000"));
+        config.setAllowedOriginPatterns(Arrays.asList());
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
