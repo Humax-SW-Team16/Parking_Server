@@ -30,11 +30,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    private void updateSearchCount(List<ParkingEntity> parkingEntities){
-//        for(ParkingEntity parkingEntity : parkingEntities){
-//            parkingEntity.setSearchCount(parkingEntity.getSearchCount()+1);
-//        }
-//    }
+    private void updateSearchCount(List<ParkingEntity> parkingEntities){
+        for(ParkingEntity parkingEntity : parkingEntities){
+            parkingEntity.setSearchCount(parkingEntity.getSearchCount()+1);
+        }
+    }
+
     public void increaseParkingSearchCount(String parkingId) {
       String parkingKey = SEARCH_COUNT_KEY + ":" + parkingId;
       Long count = redisTemplate.opsForValue().increment(parkingKey, 1);
