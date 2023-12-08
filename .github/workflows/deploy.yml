@@ -41,6 +41,8 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }} .
           docker push ${{ secrets.DOCKER_REPO }}
+          docker build -f Dockerfile_redis -t ${{ secrets.DOCKER_REPO_REDIS }} .
+          docker push ${{ secrets.DOCKER_REPO_REDIS }}      
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
@@ -51,7 +53,9 @@ jobs:
           key: ${{ secrets.KEY }}
           envs: GITHUB_SHA
           script: |
-            sudo docker rm -f $(docker ps -qa)
+            cd Parking_Server
+            sudo docker rm -f web
+            sudo docker rm -f redis
             sudo docker pull ${{ secrets.DOCKER_REPO }}
-            docker-compose up --build
-            docker image prune -f
+            sudo docker pull ${{ secrets.DOCKER_REPO_REDIS }}
+            docker-compose up -d
