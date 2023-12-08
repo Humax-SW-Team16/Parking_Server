@@ -36,9 +36,9 @@ public class UserService {
                     userLatitude, userLongitude, maxDistance);
 
             List<ParkingInfoDTO> parkingInfoDTOs = new ArrayList<>();
-            if(!nearParkingEntities.isEmpty())
+            //if(!nearParkingEntities.isEmpty())
                 //검색 결과 있을 때만 갱신
-                updateSearchCount(nearParkingEntities);
+                //updateSearchCount(nearParkingEntities);
 
             for (ParkingEntity parkingEntity : nearParkingEntities) {
                 ParkingInfoDTO parkingInfoDTO = new ParkingInfoDTO();
@@ -61,6 +61,8 @@ public class UserService {
                 parkingInfoDTO.setApplyWeekend(parkingEntity.getApplyWeekend());
                 parkingInfoDTOs.add(parkingInfoDTO);
             }
+
+            updateSearchCount(nearParkingEntities);
 
             return parkingInfoDTOs;
         } catch (Exception e){
