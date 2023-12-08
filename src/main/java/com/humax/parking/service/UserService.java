@@ -50,6 +50,8 @@ public class UserService {
                 parkingInfoDTO.setParkingId(parkingEntity.getParkingId());
                 parkingInfoDTO.setName(parkingEntity.getName());
                 parkingInfoDTO.setAddress(parkingEntity.getAddress());
+                parkingInfoDTO.setLat(parkingEntity.getLat());
+                parkingInfoDTO.setLon(parkingEntity.getLon());
                 parkingInfoDTO.setOperatingTime(parkingEntity.getOperatingTime());
                 parkingInfoDTO.setTimeTicket(parkingEntity.getTimeTicket());
                 parkingInfoDTO.setNormalSeason(parkingEntity.getNormalSeason());
@@ -95,6 +97,8 @@ public class UserService {
             parkingDetail.setParkingId(parkingEntity.getParkingId());
             parkingDetail.setName(parkingEntity.getName());
             parkingDetail.setAddress(parkingEntity.getAddress());
+            parkingDetail.setLat(parkingEntity.getLat());
+            parkingDetail.setLon(parkingEntity.getLon());
             parkingDetail.setOperatingTime(parkingEntity.getOperatingTime());
             parkingDetail.setTimeTicket(parkingEntity.getTimeTicket());
             parkingDetail.setNormalSeason(parkingEntity.getNormalSeason());
@@ -138,6 +142,8 @@ public class UserService {
         parkingInfoDTO.setParkingId(parkingEntity.getParkingId());
         parkingInfoDTO.setName(parkingEntity.getName());
         parkingInfoDTO.setAddress(parkingEntity.getAddress());
+        parkingInfoDTO.setLat(parkingEntity.getLat());
+        parkingInfoDTO.setLon(parkingEntity.getLon());
         parkingInfoDTO.setOperatingTime(parkingEntity.getOperatingTime());
         parkingInfoDTO.setTimeTicket(parkingEntity.getTimeTicket());
         parkingInfoDTO.setNormalSeason(parkingEntity.getNormalSeason());
