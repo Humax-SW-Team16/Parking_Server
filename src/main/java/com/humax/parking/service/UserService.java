@@ -5,6 +5,10 @@ import com.humax.parking.model.ParkingEntity;
 import com.humax.parking.repository.ParkingRepository;
 import com.humax.parking.repository.UserRepository;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -149,5 +153,30 @@ public class UserService {
         parkingInfoDTO.setApplyWeekend(parkingEntity.getApplyWeekend());
 
         return parkingInfoDTO;
+    }
+
+    public Map<String, String> getAllSearchCounts(){
+        Set<String> keys = stringRedisTemplate.keys(SEARCH_COUNT_KEY_PREFIX + "*");
+
+        if(keys != null && !keys.isEmpty()){
+            List<String> keyList = new ArrayList<>(keys);
+            List<String> values = stringRedisTemplate.opsForValue().multiGet(keyList);
+
+            Map<String, String> searchCounts = new HashMap<>();
+            for(int i = 0; i < keyList.size(); i++){
+                String key = keyList.get(i);
+                String parkingId = key.substring(SEARCH_COUNT_KEY_PREFIX.length());
+                String count = values.get(i);
+                searchCounts.put(parkingId, count);
+            }
+            return searchCounts;
+        }
+        return Collections.emptyMap();
+    }
+
+    public int getSearchCount(Long parkingId) {
+        String key = SEARCH_COUNT_KEY_PREFIX + parkingId;
+        String count = stringRedisTemplate.opsForValue().get(key);
+        return count != null ? Integer.parseInt(count) : 0;
     }
 }
